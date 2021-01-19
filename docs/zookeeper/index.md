@@ -5,11 +5,9 @@
 
 [TOC]
 
-## 安装
+## 系统配置
 
-### 配置Hosts
-
-#### 添加域名
+### 添加域名
 
 ```bash
 # 对所有主机统一修改
@@ -27,12 +25,24 @@ more /etc/hosts
 192.168.1.103 zookeeper3
 ```
 
-#### 设置主机名称
+### 设置主机名称
 
 ```bash
 # 对每台主机定制修改
 hostnamectl set-hostname 'zookeeper1'
 hostname -f
+```
+
+## 安装
+
+### 安装Java
+
+```bash
+yum -y install java
+JAVA_HOME=$(echo /usr/lib/jvm/java-*-openjdk-*)
+grep '^export JAVA_HOME' /etc/profile ||\
+    echo "export JAVA_HOME=${JAVA_HOME}">>/etc/profile
+tail -n 2 /etc/profile
 ```
 
 ### 安装Zookeeper
@@ -73,7 +83,7 @@ grep '^export ' /etc/profile
 source /etc/profile
 ```
 
-### 集群配置
+#### 集群配置
 
 ```bash
 # myid
@@ -94,5 +104,5 @@ tail -n 5 $ZOOKEEPER_HOME/conf/zoo.cfg
 ```bash
 # start | stop | restart | status
 zkServer.sh start
-zkServer.sh status
+zkServer.sh status | grep 'Mode:'
 ```

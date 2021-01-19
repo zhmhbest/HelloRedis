@@ -268,27 +268,29 @@ pre[data-line] .line-highlight[data-end]:after {
 <ul>
 <li><a href="#zookeeperindexhtml">Zookeeper</a>
 <ul>
-<li><a href="#%E5%AE%89%E8%A3%85">&#x5B89;&#x88C5;</a>
-<ul>
-<li><a href="#%E9%85%8D%E7%BD%AEhosts">&#x914D;&#x7F6E;Hosts</a>
+<li><a href="#%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE">&#x7CFB;&#x7EDF;&#x914D;&#x7F6E;</a>
 <ul>
 <li><a href="#%E6%B7%BB%E5%8A%A0%E5%9F%9F%E5%90%8D">&#x6DFB;&#x52A0;&#x57DF;&#x540D;</a></li>
 <li><a href="#%E8%AE%BE%E7%BD%AE%E4%B8%BB%E6%9C%BA%E5%90%8D%E7%A7%B0">&#x8BBE;&#x7F6E;&#x4E3B;&#x673A;&#x540D;&#x79F0;</a></li>
 </ul>
 </li>
-<li><a href="#%E5%AE%89%E8%A3%85zookeeper">&#x5B89;&#x88C5;Zookeeper</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85">&#x5B89;&#x88C5;</a>
+<ul>
+<li><a href="#%E5%AE%89%E8%A3%85java">&#x5B89;&#x88C5;Java</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85zookeeper">&#x5B89;&#x88C5;Zookeeper</a>
+<ul>
 <li><a href="#%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE">&#x96C6;&#x7FA4;&#x914D;&#x7F6E;</a></li>
+</ul>
+</li>
 <li><a href="#%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86">&#x670D;&#x52A1;&#x7BA1;&#x7406;</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<h2 class="mume-header" id="%E5%AE%89%E8%A3%85">&#x5B89;&#x88C5;</h2>
+<h2 class="mume-header" id="%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE">&#x7CFB;&#x7EDF;&#x914D;&#x7F6E;</h2>
 
-<h3 class="mume-header" id="%E9%85%8D%E7%BD%AEhosts">&#x914D;&#x7F6E;Hosts</h3>
-
-<h4 class="mume-header" id="%E6%B7%BB%E5%8A%A0%E5%9F%9F%E5%90%8D">&#x6DFB;&#x52A0;&#x57DF;&#x540D;</h4>
+<h3 class="mume-header" id="%E6%B7%BB%E5%8A%A0%E5%9F%9F%E5%90%8D">&#x6DFB;&#x52A0;&#x57DF;&#x540D;</h3>
 
 <pre data-role="codeBlock" data-info="bash" class="language-bash"><span class="token comment"># &#x5BF9;&#x6240;&#x6709;&#x4E3B;&#x673A;&#x7EDF;&#x4E00;&#x4FEE;&#x6539;</span>
 <span class="token function">vim</span> /etc/hosts
@@ -300,11 +302,20 @@ pre[data-line] .line-highlight[data-end]:after {
 </pre><pre data-role="codeBlock" data-info="txt" class="language-txt"><code>192.168.1.101 zookeeper1
 192.168.1.102 zookeeper2
 192.168.1.103 zookeeper3
-</code></pre><h4 class="mume-header" id="%E8%AE%BE%E7%BD%AE%E4%B8%BB%E6%9C%BA%E5%90%8D%E7%A7%B0">&#x8BBE;&#x7F6E;&#x4E3B;&#x673A;&#x540D;&#x79F0;</h4>
+</code></pre><h3 class="mume-header" id="%E8%AE%BE%E7%BD%AE%E4%B8%BB%E6%9C%BA%E5%90%8D%E7%A7%B0">&#x8BBE;&#x7F6E;&#x4E3B;&#x673A;&#x540D;&#x79F0;</h3>
 
 <pre data-role="codeBlock" data-info="bash" class="language-bash"><span class="token comment"># &#x5BF9;&#x6BCF;&#x53F0;&#x4E3B;&#x673A;&#x5B9A;&#x5236;&#x4FEE;&#x6539;</span>
 hostnamectl set-hostname <span class="token string">&apos;zookeeper1&apos;</span>
 <span class="token function">hostname</span> -f
+</pre><h2 class="mume-header" id="%E5%AE%89%E8%A3%85">&#x5B89;&#x88C5;</h2>
+
+<h3 class="mume-header" id="%E5%AE%89%E8%A3%85java">&#x5B89;&#x88C5;Java</h3>
+
+<pre data-role="codeBlock" data-info="bash" class="language-bash">yum -y <span class="token function">install</span> java
+<span class="token assign-left variable">JAVA_HOME</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token builtin class-name">echo</span> /usr/lib/jvm/java-*-openjdk-*<span class="token variable">)</span></span>
+<span class="token function">grep</span> <span class="token string">&apos;^export JAVA_HOME&apos;</span> /etc/profile <span class="token operator">||</span><span class="token punctuation">\</span>
+    <span class="token builtin class-name">echo</span> <span class="token string">&quot;export JAVA_HOME=<span class="token variable">${JAVA_HOME}</span>&quot;</span><span class="token operator">&gt;&gt;</span>/etc/profile
+<span class="token function">tail</span> -n <span class="token number">2</span> /etc/profile
 </pre><h3 class="mume-header" id="%E5%AE%89%E8%A3%85zookeeper">&#x5B89;&#x88C5;Zookeeper</h3>
 
 <pre data-role="codeBlock" data-info="bash" class="language-bash"><span class="token comment"># &#x4E0B;&#x8F7D;Zookeeper</span>
@@ -340,7 +351,7 @@ hostnamectl set-hostname <span class="token string">&apos;zookeeper1&apos;</span
     <span class="token builtin class-name">echo</span> <span class="token string">&apos;export PATH=<span class="token variable">$ZOOKEEPER_HOME</span>/bin:<span class="token environment constant">$PATH</span>&apos;</span><span class="token operator">&gt;&gt;</span>/etc/profile
 <span class="token function">grep</span> <span class="token string">&apos;^export &apos;</span> /etc/profile
 <span class="token builtin class-name">source</span> /etc/profile
-</pre><h3 class="mume-header" id="%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE">&#x96C6;&#x7FA4;&#x914D;&#x7F6E;</h3>
+</pre><h4 class="mume-header" id="%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE">&#x96C6;&#x7FA4;&#x914D;&#x7F6E;</h4>
 
 <pre data-role="codeBlock" data-info="bash" class="language-bash"><span class="token comment"># myid</span>
 <span class="token assign-left variable">hostname</span><span class="token operator">=</span><span class="token variable"><span class="token variable">`</span><span class="token function">hostname</span> -f<span class="token variable">`</span></span>
@@ -357,7 +368,7 @@ hostnamectl set-hostname <span class="token string">&apos;zookeeper1&apos;</span
 
 <pre data-role="codeBlock" data-info="bash" class="language-bash"><span class="token comment"># start | stop | restart | status</span>
 zkServer.sh start
-zkServer.sh status
+zkServer.sh status <span class="token operator">|</span> <span class="token function">grep</span> <span class="token string">&apos;Mode:&apos;</span>
 </pre>
       </div>
       
