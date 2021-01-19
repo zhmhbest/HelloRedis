@@ -16,6 +16,8 @@
 
 ## [HBase](hbase/index.html)
 
+## [Zookeeper](zookeeper/index.html)
+
 ## [Kafka](kafka/index.html)
 
 ## [ClickHouse](clickhouse/index.html)
