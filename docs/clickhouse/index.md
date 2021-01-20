@@ -198,5 +198,44 @@ clickhouse-client -m
 ```
 
 ```SQL
--- 待补充
+-- 创建集群库
+CREATE DATABASE IF NOT EXISTS dbname ON CLUSTER ck_cluster;
+
+-- 创建集群本地表
+CREATE TABLE IF NOT EXISTS
+    dbname.table_local
+ON CLUSTER
+    ck_cluster
+(
+    `EventDate` String,
+    `CounterID` UInt32,
+    `UserID` UInt32
+)
+ENGINE = ReplicatedMergeTree('/clickhouse/tables/{layer}-{shard}/table_local', '{replica}')
+PARTITION BY (EventDate)
+ORDER BY (CounterID, intHash32(UserID))
+SAMPLE BY intHash32(UserID);
+
+-- 创建集群分布式表（相当于视图）
+CREATE TABLE IF NOT EXISTS
+    dbname.table_distributed
+ON CLUSTER
+    ck_cluster
+AS
+    dbname.table_local
+ENGINE = Distributed(
+    ck_cluster,
+    dbname,
+    table_local,
+    rand()
+);
+-- Distributed({cluster}, '{local_database}', '{local_table}', rand())
+
+-- 测试插入
+INSERT INTO dbname.table_local values('2020-03-11 12:12:33',22,46);
+INSERT INTO dbname.table_distributed values('2020-03-11',22,54),('2020-03-11',22,57),('2020-03-12',22,58);
+
+-- 删除测试
+DROP TABLE IF EXISTS dbname.table_distributed ON CLUSTER ck_cluster;
+DROP TABLE IF EXISTS dbname.table_local ON CLUSTER ck_cluster;
 ```

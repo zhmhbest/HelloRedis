@@ -446,7 +446,46 @@ systemctl status clickhouse-server
 </pre><h3 class="mume-header" id="%E6%B5%8B%E8%AF%95%E9%9B%86%E7%BE%A4">&#x6D4B;&#x8BD5;&#x96C6;&#x7FA4;</h3>
 
 <pre data-role="codeBlock" data-info="bash" class="language-bash">clickhouse-client -m
-</pre><pre data-role="codeBlock" data-info="SQL" class="language-sql"><span class="token comment">-- &#x5F85;&#x8865;&#x5145;</span>
+</pre><pre data-role="codeBlock" data-info="SQL" class="language-sql"><span class="token comment">-- &#x521B;&#x5EFA;&#x96C6;&#x7FA4;&#x5E93;</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> <span class="token keyword">IF</span> <span class="token operator">NOT</span> <span class="token keyword">EXISTS</span> dbname <span class="token keyword">ON</span> CLUSTER ck_cluster<span class="token punctuation">;</span>
+
+<span class="token comment">-- &#x521B;&#x5EFA;&#x96C6;&#x7FA4;&#x672C;&#x5730;&#x8868;</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token operator">NOT</span> <span class="token keyword">EXISTS</span>
+    dbname<span class="token punctuation">.</span>table_local
+<span class="token keyword">ON</span> CLUSTER
+    ck_cluster
+<span class="token punctuation">(</span>
+    <span class="token punctuation">`</span>EventDate<span class="token punctuation">`</span> String<span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>CounterID<span class="token punctuation">`</span> UInt32<span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>UserID<span class="token punctuation">`</span> UInt32
+<span class="token punctuation">)</span>
+<span class="token keyword">ENGINE</span> <span class="token operator">=</span> ReplicatedMergeTree<span class="token punctuation">(</span><span class="token string">&apos;/clickhouse/tables/{layer}-{shard}/table_local&apos;</span><span class="token punctuation">,</span> <span class="token string">&apos;{replica}&apos;</span><span class="token punctuation">)</span>
+<span class="token keyword">PARTITION</span> <span class="token keyword">BY</span> <span class="token punctuation">(</span>EventDate<span class="token punctuation">)</span>
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> <span class="token punctuation">(</span>CounterID<span class="token punctuation">,</span> intHash32<span class="token punctuation">(</span>UserID<span class="token punctuation">)</span><span class="token punctuation">)</span>
+SAMPLE <span class="token keyword">BY</span> intHash32<span class="token punctuation">(</span>UserID<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">-- &#x521B;&#x5EFA;&#x96C6;&#x7FA4;&#x5206;&#x5E03;&#x5F0F;&#x8868;&#xFF08;&#x76F8;&#x5F53;&#x4E8E;&#x89C6;&#x56FE;&#xFF09;</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token operator">NOT</span> <span class="token keyword">EXISTS</span>
+    dbname<span class="token punctuation">.</span>table_distributed
+<span class="token keyword">ON</span> CLUSTER
+    ck_cluster
+<span class="token keyword">AS</span>
+    dbname<span class="token punctuation">.</span>table_local
+<span class="token keyword">ENGINE</span> <span class="token operator">=</span> <span class="token keyword">Distributed</span><span class="token punctuation">(</span>
+    ck_cluster<span class="token punctuation">,</span>
+    dbname<span class="token punctuation">,</span>
+    table_local<span class="token punctuation">,</span>
+    rand<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">-- Distributed({cluster}, &apos;{local_database}&apos;, &apos;{local_table}&apos;, rand())</span>
+
+<span class="token comment">-- &#x6D4B;&#x8BD5;&#x63D2;&#x5165;</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> dbname<span class="token punctuation">.</span>table_local <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token string">&apos;2020-03-11 12:12:33&apos;</span><span class="token punctuation">,</span><span class="token number">22</span><span class="token punctuation">,</span><span class="token number">46</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> dbname<span class="token punctuation">.</span>table_distributed <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token string">&apos;2020-03-11&apos;</span><span class="token punctuation">,</span><span class="token number">22</span><span class="token punctuation">,</span><span class="token number">54</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token string">&apos;2020-03-11&apos;</span><span class="token punctuation">,</span><span class="token number">22</span><span class="token punctuation">,</span><span class="token number">57</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token string">&apos;2020-03-12&apos;</span><span class="token punctuation">,</span><span class="token number">22</span><span class="token punctuation">,</span><span class="token number">58</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">-- &#x5220;&#x9664;&#x6D4B;&#x8BD5;</span>
+<span class="token keyword">DROP</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token keyword">EXISTS</span> dbname<span class="token punctuation">.</span>table_distributed <span class="token keyword">ON</span> CLUSTER ck_cluster<span class="token punctuation">;</span>
+<span class="token keyword">DROP</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token keyword">EXISTS</span> dbname<span class="token punctuation">.</span>table_local <span class="token keyword">ON</span> CLUSTER ck_cluster<span class="token punctuation">;</span>
 </pre>
       </div>
       
