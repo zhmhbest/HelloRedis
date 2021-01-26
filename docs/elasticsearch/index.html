@@ -268,7 +268,16 @@ pre[data-line] .line-highlight[data-end]:after {
 <ul>
 <li><a href="#elasticsearchindexhtml">ElasticSearch</a>
 <ul>
-<li><a href="#%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83">&#x8FD0;&#x884C;&#x73AF;&#x5883;</a></li>
+<li><a href="#%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83">&#x8FD0;&#x884C;&#x73AF;&#x5883;</a>
+<ul>
+<li><a href="#es-head">ES-Head</a></li>
+<li><a href="#%E5%90%AF%E5%8A%A8">&#x542F;&#x52A8;</a>
+<ul>
+<li><a href="#%E8%AE%BF%E9%97%AE">&#x8BBF;&#x95EE;</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li><a href="#rest-api">REST API</a>
 <ul>
 <li><a href="#%E7%B4%A2%E5%BC%95%E6%93%8D%E4%BD%9C">&#x7D22;&#x5F15;&#x64CD;&#x4F5C;</a></li>
@@ -302,7 +311,27 @@ pre[data-line] .line-highlight[data-end]:after {
 
 -Xms256m
 -Xmx256m
-</pre><h2 class="mume-header" id="rest-api">REST API</h2>
+</pre><h3 class="mume-header" id="es-head">ES-Head</h3>
+
+<pre data-role="codeBlock" data-info="bash" class="language-bash"><span class="token comment"># &#x4E0B;&#x8F7D;</span>
+<span class="token function">wget</span> <span class="token string">&apos;https://github.com/mobz/elasticsearch-head/archive/master.zip&apos;</span> -O <span class="token string">&apos;es-head.zip&apos;</span>
+<span class="token function">unzip</span> <span class="token string">&apos;./es-head.zip&apos;</span>
+<span class="token function">mv</span> <span class="token string">&apos;./elasticsearch-head-master/crx/es-head.crx&apos;</span> <span class="token string">&apos;./&apos;</span>
+<span class="token function">rm</span> -rf <span class="token string">&apos;./elasticsearch-head-master&apos;</span>
+</pre><h3 class="mume-header" id="%E5%90%AF%E5%8A%A8">&#x542F;&#x52A8;</h3>
+
+<pre data-role="codeBlock" data-info="bash" class="language-bash"><span class="token comment"># &#x542F;&#x52A8;ES</span>
+elasticsearch-<span class="token variable">${VERSION}</span>/bin/elasticsearch
+
+<span class="token comment"># &#x542F;&#x52A8;Kibana</span>
+kibana-<span class="token variable">${VERSION}</span>/bin/kibana
+</pre><h4 class="mume-header" id="%E8%AE%BF%E9%97%AE">&#x8BBF;&#x95EE;</h4>
+
+<ul>
+<li><a href="http://localhost:5601">http://localhost:5601</a></li>
+<li><a href="http://localhost:5601/app/dev_tools#/console">http://localhost:5601/app/dev_tools#/console</a></li>
+</ul>
+<h2 class="mume-header" id="rest-api">REST API</h2>
 
 <h3 class="mume-header" id="%E7%B4%A2%E5%BC%95%E6%93%8D%E4%BD%9C">&#x7D22;&#x5F15;&#x64CD;&#x4F5C;</h3>
 
@@ -568,12 +597,12 @@ GET /hello-index/_search
 <span class="token comment"># &#x5206;&#x9875;&#x67E5;&#x8BE2;</span>
 GET /hello-index/_search
 <span class="token punctuation">{</span>
-  <span class="token string">&quot;from&quot;</span><span class="token builtin class-name">:</span> <span class="token number">0</span>, 
+  <span class="token string">&quot;from&quot;</span><span class="token builtin class-name">:</span> <span class="token number">0</span>,
   <span class="token string">&quot;size&quot;</span><span class="token builtin class-name">:</span> <span class="token number">2</span>
 <span class="token punctuation">}</span>
 GET /hello-index/_search
 <span class="token punctuation">{</span>
-  <span class="token string">&quot;from&quot;</span><span class="token builtin class-name">:</span> <span class="token number">1</span>, 
+  <span class="token string">&quot;from&quot;</span><span class="token builtin class-name">:</span> <span class="token number">1</span>,
   <span class="token string">&quot;size&quot;</span><span class="token builtin class-name">:</span> <span class="token number">2</span>
 <span class="token punctuation">}</span>
 </pre><h2 class="mume-header" id="es-clients">ES Clients</h2>

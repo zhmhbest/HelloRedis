@@ -19,6 +19,31 @@
 -Xmx256m
 ```
 
+### ES-Head
+
+```bash
+# 下载
+wget 'https://github.com/mobz/elasticsearch-head/archive/master.zip' -O 'es-head.zip'
+unzip './es-head.zip'
+mv './elasticsearch-head-master/crx/es-head.crx' './'
+rm -rf './elasticsearch-head-master'
+```
+
+### 启动
+
+```bash
+# 启动ES
+elasticsearch-${VERSION}/bin/elasticsearch
+
+# 启动Kibana
+kibana-${VERSION}/bin/kibana
+```
+
+#### 访问
+
+- <http://localhost:5601>
+- <http://localhost:5601/app/dev_tools#/console>
+
 ## REST API
 
 ### 索引操作
@@ -311,12 +336,12 @@ GET /hello-index/_search
 # 分页查询
 GET /hello-index/_search
 {
-  "from": 0, 
+  "from": 0,
   "size": 2
 }
 GET /hello-index/_search
 {
-  "from": 1, 
+  "from": 1,
   "size": 2
 }
 ```
