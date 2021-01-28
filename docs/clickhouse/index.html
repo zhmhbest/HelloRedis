@@ -455,7 +455,7 @@ systemctl status clickhouse-server
 <span class="token keyword">ON</span> CLUSTER
     ck_cluster
 <span class="token punctuation">(</span>
-    <span class="token punctuation">`</span>EventDate<span class="token punctuation">`</span> String<span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>EventDate<span class="token punctuation">`</span> <span class="token keyword">Date</span><span class="token punctuation">,</span>
     <span class="token punctuation">`</span>CounterID<span class="token punctuation">`</span> UInt32<span class="token punctuation">,</span>
     <span class="token punctuation">`</span>UserID<span class="token punctuation">`</span> UInt32
 <span class="token punctuation">)</span>
@@ -477,18 +477,25 @@ SAMPLE <span class="token keyword">BY</span> intHash32<span class="token punctua
     table_local<span class="token punctuation">,</span>
     rand<span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">-- Distributed({cluster}, &apos;{local_database}&apos;, &apos;{local_table}&apos;, rand())</span>
+<span class="token comment">-- Distributed({cluster}, {local_database}, {local_table}, rand())</span>
 
-<span class="token comment">-- &#x6D4B;&#x8BD5;&#x63D2;&#x5165;</span>
-<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> dbname<span class="token punctuation">.</span>table_local <span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token string">&apos;2020-03-11 12:12:33&apos;</span><span class="token punctuation">,</span><span class="token number">22</span><span class="token punctuation">,</span><span class="token number">46</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">-- &#x672C;&#x5730;&#x8868;&#x63D2;&#x5165;&#x5220;&#x9664;</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> dbname<span class="token punctuation">.</span>table_local <span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token string">&apos;2020-03-11&apos;</span><span class="token punctuation">,</span><span class="token number">22</span><span class="token punctuation">,</span><span class="token number">46</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> dbname<span class="token punctuation">.</span>table_local <span class="token keyword">DELETE</span> <span class="token keyword">WHERE</span> UserID<span class="token operator">=</span><span class="token number">46</span><span class="token punctuation">;</span>
+
+<span class="token comment">-- &#x96C6;&#x7FA4;&#x8868;&#x63D2;&#x5165;&#x5220;&#x9664;</span>
 <span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> dbname<span class="token punctuation">.</span>table_distributed <span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token string">&apos;2020-03-11&apos;</span><span class="token punctuation">,</span><span class="token number">22</span><span class="token punctuation">,</span><span class="token number">54</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token string">&apos;2020-03-11&apos;</span><span class="token punctuation">,</span><span class="token number">22</span><span class="token punctuation">,</span><span class="token number">57</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token string">&apos;2020-03-12&apos;</span><span class="token punctuation">,</span><span class="token number">22</span><span class="token punctuation">,</span><span class="token number">58</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> dbname<span class="token punctuation">.</span>table_local <span class="token keyword">ON</span> CLUSTER ck_cluster <span class="token keyword">DELETE</span> <span class="token keyword">WHERE</span> UserID<span class="token operator">=</span><span class="token number">54</span><span class="token punctuation">;</span>
 
-<span class="token comment">-- &#x5220;&#x9664;&#x6570;&#x636E;</span>
-<span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> dbname<span class="token punctuation">.</span>table_local <span class="token keyword">ON</span> CLUSTER ck_cluster <span class="token keyword">DELETE</span> <span class="token keyword">WHERE</span> <span class="token number">1</span><span class="token operator">=</span><span class="token number">1</span>
+<span class="token comment">-- &#x6E05;&#x7A7A;&#x8868;&#x6570;&#x636E;</span>
+<span class="token keyword">TRUNCATE</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token keyword">EXISTS</span> dbname<span class="token punctuation">.</span>table_local <span class="token keyword">ON</span> CLUSTER ck_cluster<span class="token punctuation">;</span>
 
-<span class="token comment">-- &#x5220;&#x9664;&#x6D4B;&#x8BD5;</span>
+<span class="token comment">-- &#x5220;&#x9664;&#x8868;</span>
 <span class="token keyword">DROP</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token keyword">EXISTS</span> dbname<span class="token punctuation">.</span>table_distributed <span class="token keyword">ON</span> CLUSTER ck_cluster<span class="token punctuation">;</span>
 <span class="token keyword">DROP</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token keyword">EXISTS</span> dbname<span class="token punctuation">.</span>table_local <span class="token keyword">ON</span> CLUSTER ck_cluster<span class="token punctuation">;</span>
+
+<span class="token comment">-- &#x5220;&#x9664;&#x96C6;&#x7FA4;&#x5E93;</span>
+<span class="token keyword">DROP</span> <span class="token keyword">DATABASE</span> <span class="token keyword">IF</span> <span class="token keyword">EXISTS</span> dbname <span class="token keyword">ON</span> CLUSTER ck_cluster<span class="token punctuation">;</span>
 </pre>
       </div>
       

@@ -207,7 +207,7 @@ CREATE TABLE IF NOT EXISTS
 ON CLUSTER
     ck_cluster
 (
-    `EventDate` String,
+    `EventDate` Date,
     `CounterID` UInt32,
     `UserID` UInt32
 )
@@ -229,16 +229,23 @@ ENGINE = Distributed(
     table_local,
     rand()
 );
--- Distributed({cluster}, '{local_database}', '{local_table}', rand())
+-- Distributed({cluster}, {local_database}, {local_table}, rand())
 
--- 测试插入
-INSERT INTO dbname.table_local VALUES('2020-03-11 12:12:33',22,46);
+-- 本地表插入删除
+INSERT INTO dbname.table_local VALUES('2020-03-11',22,46);
+ALTER TABLE dbname.table_local DELETE WHERE UserID=46;
+
+-- 集群表插入删除
 INSERT INTO dbname.table_distributed VALUES('2020-03-11',22,54),('2020-03-11',22,57),('2020-03-12',22,58);
+ALTER TABLE dbname.table_local ON CLUSTER ck_cluster DELETE WHERE UserID=54;
 
--- 删除数据
-ALTER TABLE dbname.table_local ON CLUSTER ck_cluster DELETE WHERE 1=1
+-- 清空表数据
+TRUNCATE TABLE IF EXISTS dbname.table_local ON CLUSTER ck_cluster;
 
--- 删除测试
+-- 删除表
 DROP TABLE IF EXISTS dbname.table_distributed ON CLUSTER ck_cluster;
 DROP TABLE IF EXISTS dbname.table_local ON CLUSTER ck_cluster;
+
+-- 删除集群库
+DROP DATABASE IF EXISTS dbname ON CLUSTER ck_cluster;
 ```
