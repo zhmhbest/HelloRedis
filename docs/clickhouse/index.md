@@ -201,7 +201,7 @@ clickhouse-client -m
 -- 创建集群库
 CREATE DATABASE IF NOT EXISTS dbname ON CLUSTER ck_cluster;
 
--- 创建集群本地表
+-- 创建本地表并同步到集群
 CREATE TABLE IF NOT EXISTS
     dbname.table_local
 ON CLUSTER
@@ -216,7 +216,7 @@ PARTITION BY (EventDate)
 ORDER BY (CounterID, intHash32(UserID))
 SAMPLE BY intHash32(UserID);
 
--- 创建集群分布式表（相当于视图）
+-- 创建集群表（相当于视图）
 CREATE TABLE IF NOT EXISTS
     dbname.table_distributed
 ON CLUSTER
@@ -232,15 +232,29 @@ ENGINE = Distributed(
 -- Distributed({cluster}, {local_database}, {local_table}, rand())
 
 -- 本地表插入删除
-INSERT INTO dbname.table_local VALUES('2020-03-11',22,46);
-ALTER TABLE dbname.table_local DELETE WHERE UserID=46;
+-- INSERT INTO dbname.table_local VALUES('2020-03-11',22,46);
+-- ALTER TABLE dbname.table_local DELETE WHERE UserID=46;
 
 -- 集群表插入删除
 INSERT INTO dbname.table_distributed VALUES('2020-03-11',22,54),('2020-03-11',22,57),('2020-03-12',22,58);
 ALTER TABLE dbname.table_local ON CLUSTER ck_cluster DELETE WHERE UserID=54;
 
--- 清空表数据
+-- 清空本地表数据并同步到集群
 TRUNCATE TABLE IF EXISTS dbname.table_local ON CLUSTER ck_cluster;
+
+-- 查看本地表分区
+SELECT
+    `name`,
+    `partition`,
+    `partition_id`,
+    `path`
+FROM system.parts
+WHERE
+    `database` = 'dbname' AND
+    `table` ='table_local';
+
+-- 删除本地表分区并同步到集群
+ALTER TABLE dbname.table_local ON CLUSTER ck_cluster DROP PARTITION 'partition';
 
 -- 删除表
 DROP TABLE IF EXISTS dbname.table_distributed ON CLUSTER ck_cluster;
