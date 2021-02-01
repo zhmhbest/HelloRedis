@@ -239,6 +239,11 @@ ENGINE = Distributed(
 INSERT INTO dbname.table_distributed VALUES('2020-03-11',22,54),('2020-03-11',22,57),('2020-03-12',22,58);
 ALTER TABLE dbname.table_local ON CLUSTER ck_cluster DELETE WHERE UserID=54;
 
+-- 集群表注意事项
+-- 集群表插入会有延时情况
+-- GLOBAL IN 代替 IN
+-- GLOBAL JOIN 代替 JOIN
+
 -- 清空本地表数据并同步到集群
 TRUNCATE TABLE IF EXISTS dbname.table_local ON CLUSTER ck_cluster;
 
