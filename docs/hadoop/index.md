@@ -31,7 +31,9 @@
 
 ## 安装
 
-- [Download Hadoop Common](https://mirrors.tuna.tsinghua.edu.cn/apache/hadoop/common/)
+- [Download Hadoop Common from apache](https://archive.apache.org/dist/hadoop/common/)
+- [Download Hadoop Common from tsinghua](https://mirrors.tuna.tsinghua.edu.cn/apache/hadoop/common/)
+- [Download Hadoop Common from aliyun](https://mirrors.aliyun.com/apache/hadoop/common/)
 
 ### Windows安装
 
