@@ -197,7 +197,9 @@ systemctl status clickhouse-server
 clickhouse-client -m
 ```
 
-#### 数据库
+## CK_SQL
+
+### 数据库
 
 ```SQL
 -- 创建集群库
@@ -208,7 +210,7 @@ DROP DATABASE IF EXISTS dbname ON CLUSTER ck_cluster;
 
 ```
 
-#### 表
+### 表
 
 ```SQL
 -- 创建本地表并同步到集群
@@ -263,7 +265,7 @@ DROP TABLE IF EXISTS dbname.table_distributed ON CLUSTER ck_cluster;
 DROP TABLE IF EXISTS dbname.table_local ON CLUSTER ck_cluster;
 ```
 
-#### 分区
+### 分区
 
 ```SQL
 -- 查看本地表分区
@@ -281,7 +283,70 @@ WHERE
 ALTER TABLE dbname.table_local ON CLUSTER ck_cluster DROP PARTITION 'partition';
 ```
 
-#### 其它
+### 日期
+
+```SQL
+SELECT  now()                                 AS t
+       ,toUnixTimestamp(t)                    AS ts
+       ,toString(t)                           AS s1
+       ,formatDateTime(t,'%Y-%m-%d %H:%M:%S') AS s2
+       -- ID
+       ,toYYYYMM(t)                           AS `month_id`
+       ,toYYYYMMDD(t)                         AS `day_id`
+       ,toYYYYMMDDhhmmss(t)                   AS `second_id`
+       -- 日期
+       ,toYear(t)                             AS `年`
+       ,toQuarter(t)                          AS `季度`
+       ,toMonth(t)                            AS `月`
+       ,toDate(t)                             AS `%Y-%m-%d`
+       -- 日期
+       ,toHour(t)                             AS `时`
+       ,toMinute(t)                           AS `分`
+       ,toSecond(t)                           AS `秒`
+       ,toTime(t)                             AS `%H:%M:%S`
+       -- 排名
+       ,toDayOfYear(t)                        AS `年中天`
+       ,toDayOfMonth(t)                       AS `月中天`
+       ,toDayOfWeek(t)                        AS `周中天`
+       -- 时区
+       ,toDate(t,'Asia/Shanghai')             AS `上海日期`
+       ,toDateTime(t,'Asia/Shanghai')         AS `上海时间`
+       -- 起始
+       ,toStartOfYear(t)                      AS `始年`
+       ,toStartOfMonth(t)                     AS `始月`
+       ,toStartOfQuarter(t)                   AS `始季`
+       ,toStartOfDay(t)                       AS `始天`
+       ,toStartOfHour(t)                      AS `始时`
+       ,toStartOfMinute(t)                    AS `始分`
+       -- 之后
+       ,addYears(t,1)
+       ,addQuarters(t,1)
+       ,addMonths(t,1)
+       ,addWeeks(t,1)
+       ,addDays(t,1)
+       ,addHours(t,1)
+       ,addMinutes(t,1)
+       ,addSeconds(t,1)
+       -- 之前
+       ,subtractYears(t,1)
+       ,subtractQuarters(t,1)
+       ,subtractMonths(t,1)
+       ,subtractWeeks(t,1)
+       ,subtractDays(t,1)
+       ,subtractHours(t,1)
+       ,subtractMinutes(t,1)
+       ,subtractSeconds(t,1)
+       -- 时间差
+       ,DATEDIFF('year',t,addYears(t,1))      AS diff_years
+       ,DATEDIFF('month',t,addMonths(t,2))    AS diff_months
+       ,DATEDIFF('week',t,addWeeks(t,3))      AS diff_week
+       ,DATEDIFF('day',t,addDays(t,4))        AS diff_days
+       ,DATEDIFF('hour',t,addHours(t,5))      AS diff_hours
+       ,DATEDIFF('minute',t,addMinutes(t,6))  AS diff_minutes
+       ,DATEDIFF('second',t,addSeconds(t,7))  AS diff_seconds ;
+```
+
+### 其它
 
 ```SQL
 -- 正则匹配

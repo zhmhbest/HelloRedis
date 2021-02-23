@@ -287,14 +287,16 @@ pre[data-line] .line-highlight[data-end]:after {
 <li><a href="#%E8%B0%83%E8%AF%95clickhouse">&#x8C03;&#x8BD5;ClickHouse</a>
 <ul>
 <li><a href="#%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86">&#x670D;&#x52A1;&#x7BA1;&#x7406;</a></li>
-<li><a href="#%E6%B5%8B%E8%AF%95%E9%9B%86%E7%BE%A4">&#x6D4B;&#x8BD5;&#x96C6;&#x7FA4;</a>
+<li><a href="#%E6%B5%8B%E8%AF%95%E9%9B%86%E7%BE%A4">&#x6D4B;&#x8BD5;&#x96C6;&#x7FA4;</a></li>
+</ul>
+</li>
+<li><a href="#ck_sql">CK_SQL</a>
 <ul>
 <li><a href="#%E6%95%B0%E6%8D%AE%E5%BA%93">&#x6570;&#x636E;&#x5E93;</a></li>
 <li><a href="#%E8%A1%A8">&#x8868;</a></li>
 <li><a href="#%E5%88%86%E5%8C%BA">&#x5206;&#x533A;</a></li>
+<li><a href="#%E6%97%A5%E6%9C%9F">&#x65E5;&#x671F;</a></li>
 <li><a href="#%E5%85%B6%E5%AE%83">&#x5176;&#x5B83;</a></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -453,7 +455,9 @@ systemctl status clickhouse-server
 </pre><h3 class="mume-header" id="%E6%B5%8B%E8%AF%95%E9%9B%86%E7%BE%A4">&#x6D4B;&#x8BD5;&#x96C6;&#x7FA4;</h3>
 
 <pre data-role="codeBlock" data-info="bash" class="language-bash">clickhouse-client -m
-</pre><h4 class="mume-header" id="%E6%95%B0%E6%8D%AE%E5%BA%93">&#x6570;&#x636E;&#x5E93;</h4>
+</pre><h2 class="mume-header" id="ck_sql">CK_SQL</h2>
+
+<h3 class="mume-header" id="%E6%95%B0%E6%8D%AE%E5%BA%93">&#x6570;&#x636E;&#x5E93;</h3>
 
 <pre data-role="codeBlock" data-info="SQL" class="language-sql"><span class="token comment">-- &#x521B;&#x5EFA;&#x96C6;&#x7FA4;&#x5E93;</span>
 <span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> <span class="token keyword">IF</span> <span class="token operator">NOT</span> <span class="token keyword">EXISTS</span> dbname <span class="token keyword">ON</span> CLUSTER ck_cluster<span class="token punctuation">;</span>
@@ -461,7 +465,7 @@ systemctl status clickhouse-server
 <span class="token comment">-- &#x5220;&#x9664;&#x96C6;&#x7FA4;&#x5E93;</span>
 <span class="token keyword">DROP</span> <span class="token keyword">DATABASE</span> <span class="token keyword">IF</span> <span class="token keyword">EXISTS</span> dbname <span class="token keyword">ON</span> CLUSTER ck_cluster<span class="token punctuation">;</span>
 
-</pre><h4 class="mume-header" id="%E8%A1%A8">&#x8868;</h4>
+</pre><h3 class="mume-header" id="%E8%A1%A8">&#x8868;</h3>
 
 <pre data-role="codeBlock" data-info="SQL" class="language-sql"><span class="token comment">-- &#x521B;&#x5EFA;&#x672C;&#x5730;&#x8868;&#x5E76;&#x540C;&#x6B65;&#x5230;&#x96C6;&#x7FA4;</span>
 <span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token operator">NOT</span> <span class="token keyword">EXISTS</span>
@@ -513,7 +517,7 @@ SAMPLE <span class="token keyword">BY</span> intHash32<span class="token punctua
 <span class="token comment">-- &#x5220;&#x9664;&#x8868;</span>
 <span class="token keyword">DROP</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token keyword">EXISTS</span> dbname<span class="token punctuation">.</span>table_distributed <span class="token keyword">ON</span> CLUSTER ck_cluster<span class="token punctuation">;</span>
 <span class="token keyword">DROP</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token keyword">EXISTS</span> dbname<span class="token punctuation">.</span>table_local <span class="token keyword">ON</span> CLUSTER ck_cluster<span class="token punctuation">;</span>
-</pre><h4 class="mume-header" id="%E5%88%86%E5%8C%BA">&#x5206;&#x533A;</h4>
+</pre><h3 class="mume-header" id="%E5%88%86%E5%8C%BA">&#x5206;&#x533A;</h3>
 
 <pre data-role="codeBlock" data-info="SQL" class="language-sql"><span class="token comment">-- &#x67E5;&#x770B;&#x672C;&#x5730;&#x8868;&#x5206;&#x533A;</span>
 <span class="token keyword">SELECT</span>
@@ -528,7 +532,67 @@ SAMPLE <span class="token keyword">BY</span> intHash32<span class="token punctua
 
 <span class="token comment">-- &#x5220;&#x9664;&#x672C;&#x5730;&#x8868;&#x5206;&#x533A;&#x5E76;&#x540C;&#x6B65;&#x5230;&#x96C6;&#x7FA4;</span>
 <span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> dbname<span class="token punctuation">.</span>table_local <span class="token keyword">ON</span> CLUSTER ck_cluster <span class="token keyword">DROP</span> <span class="token keyword">PARTITION</span> <span class="token string">&apos;partition&apos;</span><span class="token punctuation">;</span>
-</pre><h4 class="mume-header" id="%E5%85%B6%E5%AE%83">&#x5176;&#x5B83;</h4>
+</pre><h3 class="mume-header" id="%E6%97%A5%E6%9C%9F">&#x65E5;&#x671F;</h3>
+
+<pre data-role="codeBlock" data-info="SQL" class="language-sql"><span class="token keyword">SELECT</span>  <span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span>                                 <span class="token keyword">AS</span> t
+       <span class="token punctuation">,</span>toUnixTimestamp<span class="token punctuation">(</span>t<span class="token punctuation">)</span>                    <span class="token keyword">AS</span> ts
+       <span class="token punctuation">,</span>toString<span class="token punctuation">(</span>t<span class="token punctuation">)</span>                           <span class="token keyword">AS</span> s1
+       <span class="token punctuation">,</span>formatDateTime<span class="token punctuation">(</span>t<span class="token punctuation">,</span><span class="token string">&apos;%Y-%m-%d %H:%M:%S&apos;</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> s2
+       <span class="token comment">-- ID</span>
+       <span class="token punctuation">,</span>toYYYYMM<span class="token punctuation">(</span>t<span class="token punctuation">)</span>                           <span class="token keyword">AS</span> <span class="token punctuation">`</span>month_id<span class="token punctuation">`</span>
+       <span class="token punctuation">,</span>toYYYYMMDD<span class="token punctuation">(</span>t<span class="token punctuation">)</span>                         <span class="token keyword">AS</span> <span class="token punctuation">`</span>day_id<span class="token punctuation">`</span>
+       <span class="token punctuation">,</span>toYYYYMMDDhhmmss<span class="token punctuation">(</span>t<span class="token punctuation">)</span>                   <span class="token keyword">AS</span> <span class="token punctuation">`</span>second_id<span class="token punctuation">`</span>
+       <span class="token comment">-- &#x65E5;&#x671F;</span>
+       <span class="token punctuation">,</span>toYear<span class="token punctuation">(</span>t<span class="token punctuation">)</span>                             <span class="token keyword">AS</span> <span class="token punctuation">`</span>&#x5E74;<span class="token punctuation">`</span>
+       <span class="token punctuation">,</span>toQuarter<span class="token punctuation">(</span>t<span class="token punctuation">)</span>                          <span class="token keyword">AS</span> <span class="token punctuation">`</span>&#x5B63;&#x5EA6;<span class="token punctuation">`</span>
+       <span class="token punctuation">,</span>toMonth<span class="token punctuation">(</span>t<span class="token punctuation">)</span>                            <span class="token keyword">AS</span> <span class="token punctuation">`</span>&#x6708;<span class="token punctuation">`</span>
+       <span class="token punctuation">,</span>toDate<span class="token punctuation">(</span>t<span class="token punctuation">)</span>                             <span class="token keyword">AS</span> <span class="token punctuation">`</span><span class="token operator">%</span>Y<span class="token operator">-</span><span class="token operator">%</span>m<span class="token operator">-</span><span class="token operator">%</span>d<span class="token punctuation">`</span>
+       <span class="token comment">-- &#x65E5;&#x671F;</span>
+       <span class="token punctuation">,</span>toHour<span class="token punctuation">(</span>t<span class="token punctuation">)</span>                             <span class="token keyword">AS</span> <span class="token punctuation">`</span>&#x65F6;<span class="token punctuation">`</span>
+       <span class="token punctuation">,</span>toMinute<span class="token punctuation">(</span>t<span class="token punctuation">)</span>                           <span class="token keyword">AS</span> <span class="token punctuation">`</span>&#x5206;<span class="token punctuation">`</span>
+       <span class="token punctuation">,</span>toSecond<span class="token punctuation">(</span>t<span class="token punctuation">)</span>                           <span class="token keyword">AS</span> <span class="token punctuation">`</span>&#x79D2;<span class="token punctuation">`</span>
+       <span class="token punctuation">,</span>toTime<span class="token punctuation">(</span>t<span class="token punctuation">)</span>                             <span class="token keyword">AS</span> <span class="token punctuation">`</span><span class="token operator">%</span>H:<span class="token operator">%</span>M:<span class="token operator">%</span>S<span class="token punctuation">`</span>
+       <span class="token comment">-- &#x6392;&#x540D;</span>
+       <span class="token punctuation">,</span>toDayOfYear<span class="token punctuation">(</span>t<span class="token punctuation">)</span>                        <span class="token keyword">AS</span> <span class="token punctuation">`</span>&#x5E74;&#x4E2D;&#x5929;<span class="token punctuation">`</span>
+       <span class="token punctuation">,</span>toDayOfMonth<span class="token punctuation">(</span>t<span class="token punctuation">)</span>                       <span class="token keyword">AS</span> <span class="token punctuation">`</span>&#x6708;&#x4E2D;&#x5929;<span class="token punctuation">`</span>
+       <span class="token punctuation">,</span>toDayOfWeek<span class="token punctuation">(</span>t<span class="token punctuation">)</span>                        <span class="token keyword">AS</span> <span class="token punctuation">`</span>&#x5468;&#x4E2D;&#x5929;<span class="token punctuation">`</span>
+       <span class="token comment">-- &#x65F6;&#x533A;</span>
+       <span class="token punctuation">,</span>toDate<span class="token punctuation">(</span>t<span class="token punctuation">,</span><span class="token string">&apos;Asia/Shanghai&apos;</span><span class="token punctuation">)</span>             <span class="token keyword">AS</span> <span class="token punctuation">`</span>&#x4E0A;&#x6D77;&#x65E5;&#x671F;<span class="token punctuation">`</span>
+       <span class="token punctuation">,</span>toDateTime<span class="token punctuation">(</span>t<span class="token punctuation">,</span><span class="token string">&apos;Asia/Shanghai&apos;</span><span class="token punctuation">)</span>         <span class="token keyword">AS</span> <span class="token punctuation">`</span>&#x4E0A;&#x6D77;&#x65F6;&#x95F4;<span class="token punctuation">`</span>
+       <span class="token comment">-- &#x8D77;&#x59CB;</span>
+       <span class="token punctuation">,</span>toStartOfYear<span class="token punctuation">(</span>t<span class="token punctuation">)</span>                      <span class="token keyword">AS</span> <span class="token punctuation">`</span>&#x59CB;&#x5E74;<span class="token punctuation">`</span>
+       <span class="token punctuation">,</span>toStartOfMonth<span class="token punctuation">(</span>t<span class="token punctuation">)</span>                     <span class="token keyword">AS</span> <span class="token punctuation">`</span>&#x59CB;&#x6708;<span class="token punctuation">`</span>
+       <span class="token punctuation">,</span>toStartOfQuarter<span class="token punctuation">(</span>t<span class="token punctuation">)</span>                   <span class="token keyword">AS</span> <span class="token punctuation">`</span>&#x59CB;&#x5B63;<span class="token punctuation">`</span>
+       <span class="token punctuation">,</span>toStartOfDay<span class="token punctuation">(</span>t<span class="token punctuation">)</span>                       <span class="token keyword">AS</span> <span class="token punctuation">`</span>&#x59CB;&#x5929;<span class="token punctuation">`</span>
+       <span class="token punctuation">,</span>toStartOfHour<span class="token punctuation">(</span>t<span class="token punctuation">)</span>                      <span class="token keyword">AS</span> <span class="token punctuation">`</span>&#x59CB;&#x65F6;<span class="token punctuation">`</span>
+       <span class="token punctuation">,</span>toStartOfMinute<span class="token punctuation">(</span>t<span class="token punctuation">)</span>                    <span class="token keyword">AS</span> <span class="token punctuation">`</span>&#x59CB;&#x5206;<span class="token punctuation">`</span>
+       <span class="token comment">-- &#x4E4B;&#x540E;</span>
+       <span class="token punctuation">,</span>addYears<span class="token punctuation">(</span>t<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span>
+       <span class="token punctuation">,</span>addQuarters<span class="token punctuation">(</span>t<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span>
+       <span class="token punctuation">,</span>addMonths<span class="token punctuation">(</span>t<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span>
+       <span class="token punctuation">,</span>addWeeks<span class="token punctuation">(</span>t<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span>
+       <span class="token punctuation">,</span>addDays<span class="token punctuation">(</span>t<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span>
+       <span class="token punctuation">,</span>addHours<span class="token punctuation">(</span>t<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span>
+       <span class="token punctuation">,</span>addMinutes<span class="token punctuation">(</span>t<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span>
+       <span class="token punctuation">,</span>addSeconds<span class="token punctuation">(</span>t<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span>
+       <span class="token comment">-- &#x4E4B;&#x524D;</span>
+       <span class="token punctuation">,</span>subtractYears<span class="token punctuation">(</span>t<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span>
+       <span class="token punctuation">,</span>subtractQuarters<span class="token punctuation">(</span>t<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span>
+       <span class="token punctuation">,</span>subtractMonths<span class="token punctuation">(</span>t<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span>
+       <span class="token punctuation">,</span>subtractWeeks<span class="token punctuation">(</span>t<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span>
+       <span class="token punctuation">,</span>subtractDays<span class="token punctuation">(</span>t<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span>
+       <span class="token punctuation">,</span>subtractHours<span class="token punctuation">(</span>t<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span>
+       <span class="token punctuation">,</span>subtractMinutes<span class="token punctuation">(</span>t<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span>
+       <span class="token punctuation">,</span>subtractSeconds<span class="token punctuation">(</span>t<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span>
+       <span class="token comment">-- &#x65F6;&#x95F4;&#x5DEE;</span>
+       <span class="token punctuation">,</span>DATEDIFF<span class="token punctuation">(</span><span class="token string">&apos;year&apos;</span><span class="token punctuation">,</span>t<span class="token punctuation">,</span>addYears<span class="token punctuation">(</span>t<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>      <span class="token keyword">AS</span> diff_years
+       <span class="token punctuation">,</span>DATEDIFF<span class="token punctuation">(</span><span class="token string">&apos;month&apos;</span><span class="token punctuation">,</span>t<span class="token punctuation">,</span>addMonths<span class="token punctuation">(</span>t<span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>    <span class="token keyword">AS</span> diff_months
+       <span class="token punctuation">,</span>DATEDIFF<span class="token punctuation">(</span><span class="token string">&apos;week&apos;</span><span class="token punctuation">,</span>t<span class="token punctuation">,</span>addWeeks<span class="token punctuation">(</span>t<span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span>      <span class="token keyword">AS</span> diff_week
+       <span class="token punctuation">,</span>DATEDIFF<span class="token punctuation">(</span><span class="token string">&apos;day&apos;</span><span class="token punctuation">,</span>t<span class="token punctuation">,</span>addDays<span class="token punctuation">(</span>t<span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">)</span>        <span class="token keyword">AS</span> diff_days
+       <span class="token punctuation">,</span>DATEDIFF<span class="token punctuation">(</span><span class="token string">&apos;hour&apos;</span><span class="token punctuation">,</span>t<span class="token punctuation">,</span>addHours<span class="token punctuation">(</span>t<span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span>      <span class="token keyword">AS</span> diff_hours
+       <span class="token punctuation">,</span>DATEDIFF<span class="token punctuation">(</span><span class="token string">&apos;minute&apos;</span><span class="token punctuation">,</span>t<span class="token punctuation">,</span>addMinutes<span class="token punctuation">(</span>t<span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token keyword">AS</span> diff_minutes
+       <span class="token punctuation">,</span>DATEDIFF<span class="token punctuation">(</span><span class="token string">&apos;second&apos;</span><span class="token punctuation">,</span>t<span class="token punctuation">,</span>addSeconds<span class="token punctuation">(</span>t<span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token keyword">AS</span> diff_seconds <span class="token punctuation">;</span>
+</pre><h3 class="mume-header" id="%E5%85%B6%E5%AE%83">&#x5176;&#x5B83;</h3>
 
 <pre data-role="codeBlock" data-info="SQL" class="language-sql"><span class="token comment">-- &#x6B63;&#x5219;&#x5339;&#x914D;</span>
 <span class="token keyword">SELECT</span> <span class="token keyword">DISTINCT</span><span class="token punctuation">(</span>region<span class="token punctuation">)</span> <span class="token keyword">FROM</span> dbname<span class="token punctuation">.</span>table_distributed <span class="token keyword">WHERE</span> <span class="token operator">NOT</span> <span class="token keyword">match</span><span class="token punctuation">(</span>region <span class="token punctuation">,</span> <span class="token string">&apos;^[0-9]+$&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
