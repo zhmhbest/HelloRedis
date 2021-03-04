@@ -394,7 +394,7 @@ client.search({
 ### JAVA调用
 
 ```bash
-mvn archetype:generate "-DgroupId=com.hello.es" "-DartifactId=HelloJavaElasticSearch" "-DarchetypeArtifactId=maven-archetype-quickstart" "-DinteractiveMode=false"
+mvn archetype:generate "-DgroupId=org.example.es" "-DartifactId=HelloJavaElasticSearch" "-DarchetypeArtifactId=maven-archetype-quickstart" "-DinteractiveMode=false"
 cd HelloJavaElasticSearch
 vim pom.xml
 ```
@@ -403,26 +403,41 @@ vim pom.xml
 
 ```xml
 <!-- ... -->
-        <!--
-        <dependency>
-            <groupId>org.elasticsearch.client</groupId>
-            <artifactId>elasticsearch-rest-client</artifactId>
-            <version>7.10.1</version>
-        </dependency>
-        -->
-        <dependency>
-            <groupId>org.elasticsearch.client</groupId>
-            <artifactId>elasticsearch-rest-high-level-client</artifactId>
-            <version>7.10.1</version>
-        </dependency>
+<dependencies>
+    <!-- <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>3.8.1</version>
+        <scope>test</scope>
+    </dependency> -->
+
+    <!-- Java API: 二进制传输 -->
+    <!-- <dependency>
+        <groupId>org.elasticsearch.client</groupId>
+        <artifactId>transport</artifactId>
+        <version>7.10.1</version>
+    </dependency> -->
+
+    <!-- Rest 低级 API -->
+    <!-- <dependency>
+        <groupId>org.elasticsearch.client</groupId>
+        <artifactId>elasticsearch-rest-client</artifactId>
+        <version>7.10.1</version>
+    </dependency> -->
+
+    <!-- Rest 高级 API -->
+    <dependency>
+        <groupId>org.elasticsearch.client</groupId>
+        <artifactId>elasticsearch-rest-high-level-client</artifactId>
+        <version>7.10.1</version>
+    </dependency>
+</dependencies>
 <!-- ... -->
 ```
 
-`com.hello.es.App`
+`App.java`
 
 ```java
-package com.hello.es;
-
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;

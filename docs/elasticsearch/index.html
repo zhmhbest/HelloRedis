@@ -646,28 +646,43 @@ client<span class="token punctuation">.</span><span class="token method function
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </pre><h3 class="mume-header" id="java%E8%B0%83%E7%94%A8">JAVA&#x8C03;&#x7528;</h3>
 
-<pre data-role="codeBlock" data-info="bash" class="language-bash">mvn archetype:generate <span class="token string">&quot;-DgroupId=com.hello.es&quot;</span> <span class="token string">&quot;-DartifactId=HelloJavaElasticSearch&quot;</span> <span class="token string">&quot;-DarchetypeArtifactId=maven-archetype-quickstart&quot;</span> <span class="token string">&quot;-DinteractiveMode=false&quot;</span>
+<pre data-role="codeBlock" data-info="bash" class="language-bash">mvn archetype:generate <span class="token string">&quot;-DgroupId=org.example.es&quot;</span> <span class="token string">&quot;-DartifactId=HelloJavaElasticSearch&quot;</span> <span class="token string">&quot;-DarchetypeArtifactId=maven-archetype-quickstart&quot;</span> <span class="token string">&quot;-DinteractiveMode=false&quot;</span>
 <span class="token builtin class-name">cd</span> HelloJavaElasticSearch
 <span class="token function">vim</span> pom.xml
 </pre><p><code>pom.xml</code></p>
 <pre data-role="codeBlock" data-info="xml" class="language-xml"><span class="token comment">&lt;!-- ... --&gt;</span>
-        <span class="token comment">&lt;!--
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.elasticsearch.client&lt;/groupId&gt;
-            &lt;artifactId&gt;elasticsearch-rest-client&lt;/artifactId&gt;
-            &lt;version&gt;7.10.1&lt;/version&gt;
-        &lt;/dependency&gt;
-        --&gt;</span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>org.elasticsearch.client<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>elasticsearch-rest-high-level-client<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span>7.10.1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">&gt;</span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span>
-<span class="token comment">&lt;!-- ... --&gt;</span>
-</pre><p><code>com.hello.es.App</code></p>
-<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>hello<span class="token punctuation">.</span>es</span><span class="token punctuation">;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependencies</span><span class="token punctuation">&gt;</span></span>
+    <span class="token comment">&lt;!-- &lt;dependency&gt;
+        &lt;groupId&gt;junit&lt;/groupId&gt;
+        &lt;artifactId&gt;junit&lt;/artifactId&gt;
+        &lt;version&gt;3.8.1&lt;/version&gt;
+        &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt; --&gt;</span>
 
-<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>http<span class="token punctuation">.</span></span><span class="token class-name">HttpHost</span><span class="token punctuation">;</span>
+    <span class="token comment">&lt;!-- Java API: &#x4E8C;&#x8FDB;&#x5236;&#x4F20;&#x8F93; --&gt;</span>
+    <span class="token comment">&lt;!-- &lt;dependency&gt;
+        &lt;groupId&gt;org.elasticsearch.client&lt;/groupId&gt;
+        &lt;artifactId&gt;transport&lt;/artifactId&gt;
+        &lt;version&gt;7.10.1&lt;/version&gt;
+    &lt;/dependency&gt; --&gt;</span>
+
+    <span class="token comment">&lt;!-- Rest &#x4F4E;&#x7EA7; API --&gt;</span>
+    <span class="token comment">&lt;!-- &lt;dependency&gt;
+        &lt;groupId&gt;org.elasticsearch.client&lt;/groupId&gt;
+        &lt;artifactId&gt;elasticsearch-rest-client&lt;/artifactId&gt;
+        &lt;version&gt;7.10.1&lt;/version&gt;
+    &lt;/dependency&gt; --&gt;</span>
+
+    <span class="token comment">&lt;!-- Rest &#x9AD8;&#x7EA7; API --&gt;</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>org.elasticsearch.client<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>elasticsearch-rest-high-level-client<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span>7.10.1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependencies</span><span class="token punctuation">&gt;</span></span>
+<span class="token comment">&lt;!-- ... --&gt;</span>
+</pre><p><code>App.java</code></p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>http<span class="token punctuation">.</span></span><span class="token class-name">HttpHost</span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>elasticsearch<span class="token punctuation">.</span>client<span class="token punctuation">.</span></span><span class="token class-name">RequestOptions</span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>elasticsearch<span class="token punctuation">.</span>client<span class="token punctuation">.</span></span><span class="token class-name">RestClient</span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>elasticsearch<span class="token punctuation">.</span>client<span class="token punctuation">.</span></span><span class="token class-name">RestHighLevelClient</span><span class="token punctuation">;</span>
