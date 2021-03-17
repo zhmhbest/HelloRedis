@@ -81,6 +81,10 @@ kibana-${VERSION}/bin/kibana
 
 @import "docs/search.sh"
 
+### Group
+
+@import "docs/group.sh"
+
 ### Example
 
 @import "docs/example.sh"
@@ -119,11 +123,11 @@ const client = new Client({
 });
 
 client.search({
-    index: 'hello-index',
+    index: `${IndexName}`,
     body: {
         query: {
             match: {
-                desc: '男'
+                `${FieldName}`: `${FieldValue}`
             }
         }
     }

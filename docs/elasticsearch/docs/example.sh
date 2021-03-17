@@ -153,6 +153,8 @@ GET /student1/_search
   }
 }
 
+# ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
 # 字段过滤
 GET /student1/_search
 {
@@ -182,6 +184,8 @@ GET /student1/_search
   "from": 2,
   "size": 2
 }
+
+# ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 
 ### 高亮匹配的内容
 GET /student1/_search
@@ -227,6 +231,34 @@ GET /student1/_search
   "highlight": {
     "fields": {
       "comment": {}
+    }
+  }
+}
+
+# ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
+GET /student1/_search
+{
+  "aggs": {
+    "maxWeight": {
+      "max": {
+        "field": "weight"
+      }
+    },
+    "minWeight": {
+      "min": {
+        "field": "weight"
+      }
+    },
+    "avgWeight": {
+      "avg": {
+        "field": "weight"
+      }
+    },
+    "sumWeight": {
+      "sum": {
+        "field": "weight"
+      }
     }
   }
 }
