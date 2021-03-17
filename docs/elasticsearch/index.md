@@ -19,7 +19,7 @@
 -Xmx256m
 ```
 
-### ES-Head
+### es-head
 
 ```bash
 # 下载
@@ -34,23 +34,60 @@ rm -rf './elasticsearch-head-master'
 ```bash
 # 启动ES
 elasticsearch-${VERSION}/bin/elasticsearch
+# 默认HTTP协议端口9200
+# 默认TCP 协议端口9300
 
 # 启动Kibana
 kibana-${VERSION}/bin/kibana
+# 默认HTTP协议端口5601
 ```
-
-#### 访问
 
 - <http://localhost:5601>
 - <http://localhost:5601/app/dev_tools#/console>
 
+## 基本概念
+
+每台服务器可以运行多个 Elastic 实例。单个 Elastic 实例称为一个 **Node** 。一组节点构成一个 **Cluster** 。
+
+ElasticSearch 会索引所有字段，经过处理后写入一个反向索引（Inverted Index）。所以，Elastic 数据管理的顶层单位就叫做 Index（索引）。每个 Index （即数据库）的名字必须是小写。
+
 ## REST API
 
-### 索引操作
+### Cat
+
+@import "docs/cat.sh"
+
+### Template
+
+@import "docs/template.sh"
+
+### Index
+
+```bash
+# 查看索引
+GET /${IndexName}
+```
+
+```json
+{
+    "{{ IndexName }}": {
+        "aliases": {},
+        "mappings": {
+            "{{ TemplateName }}": {
+                "_all": {},
+                "properties": {}
+            }
+        },
+        "settings": {
+            "index": {}
+        }
+    }
+}
+```
 
 ```bash
 # 删除索引
-DELETE /hello-index
+DELETE /${IndexName}
 
 # 创建索引
 PUT /hello-index
@@ -75,9 +112,6 @@ PUT /hello-index
     }
   }
 }
-
-# 查看索引
-GET /hello-index
 ```
 
 ### 文档操作
