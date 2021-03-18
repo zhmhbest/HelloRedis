@@ -1,5 +1,6 @@
 # 创建文档（指定ID）
-PUT /${IndexName}/_doc/${ID}
+# PUT /${IndexName}/_doc/${ID}/_create
+PUT /${IndexName}/_doc/${ID}/
 {
     "${FieldName}": "${FieldValue}",
     # ...
@@ -22,6 +23,7 @@ GET /${IndexName}/_doc/${ID}
 DELETE /${IndexName}/_doc/${ID}
 
 # 修改文档
+# POST /${IndexName}/${Type}/${ID}/_update
 POST /${IndexName}/_update/${ID}
 {
     "doc": {

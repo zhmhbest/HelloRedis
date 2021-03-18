@@ -4,6 +4,7 @@ GET /_cat/templates?v&h=name
 PUT /_template/student
 {
   "order": 1,
+  "template": "student*",
   "index_patterns": "student*",
   "settings": {
     "index": {}
@@ -14,7 +15,8 @@ PUT /_template/student
         "type": "keyword"
       },
       "comment": {
-        "type": "text"
+        "type": "text",
+        "fielddata": true
       },
       "gender": {
         "type": "boolean"
@@ -32,9 +34,9 @@ PUT /_template/student
   },
   "aliases": {}
 }
+HEAD /_template/student
 # 查看模板
 GET /_template/student
-HEAD /_template/student
 # DELETE /_template/student
 
 # ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
@@ -125,3 +127,6 @@ GET /student1/_search
 
 GET /student1/_search
 {"size":0,"aggs":{"maxWeight":{"max":{"field":"weight"}},"minWeight":{"min":{"field":"weight"}},"avgWeight":{"avg":{"field":"weight"}},"sumWeight":{"sum":{"field":"weight"}},"countGender":{"terms":{"field":"gender"},"aggs":{"maxGenderWeight":{"max":{"field":"weight"}},"minGenderWeight":{"min":{"field":"weight"}}}}}}
+
+GET /student1/_search
+{"size":0,"aggs":{"showWeight":{"terms":{"field":"comment"},"aggs":{"maxGenderWeight":{"max":{"field":"weight"}},"minGenderWeight":{"min":{"field":"weight"}}}}}}

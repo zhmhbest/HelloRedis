@@ -5,11 +5,11 @@ GET /_cat/templates?v
 PUT /_template/${TemplateName}
 {
     "order": 1,
-    # "template": "${TemplatePattern}",
-    "index_patterns": "${TemplatePattern}",
+    # "template": "${TemplatePattern}",         # 5.6
+    "index_patterns": "${TemplatePattern}",     # 7.x
     "settings": { "index": {} },
     "mappings": {
-        # "${_doc}": {
+        # "${Type}": {                          # 5.6
             "properties": {
                 # keyword | text
                 # byte | short | integer | long
@@ -19,7 +19,10 @@ PUT /_template/${TemplateName}
                 # binary
                 # integer_range | long_range | float_range | double_range | date_range
                 "${FieldName}": {
-                    "type": "${FieldType}"
+                    "type": "${FieldType}",
+
+                    # 在text字段上默认禁用了fielddata，这将导致不能进行聚合操作
+                    # "fielddata": true
                 },
                 # ...
             }

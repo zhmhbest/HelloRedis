@@ -10,6 +10,7 @@ GET /${IndexName}/_search
       },
       # terms = group by
       "terms": {
+        # 若聚合text类型需要开启fielddata
         "field": "${FieldName}",
         "aggs": {
           # 聚合组内数据
