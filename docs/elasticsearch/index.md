@@ -71,19 +71,30 @@ kibana-${VERSION}/bin/kibana
 
 ### Index
 
+>[Index Guide](https://www.elastic.co/guide/cn/elasticsearch/guide/current/index-management.html)
+
 @import "docs/index.sh"
 
 ### Document
+
+>[Data-in-data-out Guide](https://www.elastic.co/guide/cn/elasticsearch/guide/current/data-in-data-out.html)
 
 @import "docs/document.sh"
 
 ### Search
 
+>[Search Guide](https://www.elastic.co/guide/cn/elasticsearch/guide/current/search.html)
+>[Full-body-search Guide](https://www.elastic.co/guide/cn/elasticsearch/guide/current/full-body-search.html)
+>[Search-in-depth Guide](https://www.elastic.co/guide/cn/elasticsearch/guide/current/search-in-depth.html)
+>[Sorting Guide](https://www.elastic.co/guide/cn/elasticsearch/guide/current/sorting.html)
+
 @import "docs/search.sh"
 
-### Group
+### Aggregation
 
-@import "docs/group.sh"
+>[Aggregations Guide](https://www.elastic.co/guide/cn/elasticsearch/guide/current/aggregations.html)
+
+@import "docs/aggregation.sh"
 
 ### Example
 

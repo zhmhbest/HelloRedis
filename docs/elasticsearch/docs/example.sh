@@ -52,59 +52,20 @@ HEAD /student1
 
 # 创建文档
 PUT /student1/_doc/1
-{
-  "name": "张三",
-  "comment": "一位帅哥",
-  "gender": true,
-  "birth": "1999-10-10",
-  "weight": 120.6,
-  "class": 101
-}
+{"name":"张三","comment":"一位帅哥","gender":true,"birth":"1999-10-10","weight":120.6,"class":101}
 PUT /student1/_doc/2
-{
-  "name": "李四",
-  "comment": "一位靓女",
-  "gender": false,
-  "birth": "1995-03-13",
-  "weight": 99.2,
-  "class": 101
-}
+{"name":"李四","comment":"一位靓女","gender":false,"birth":"1995-03-13","weight":99.2,"class":101}
 PUT /student1/_doc/3
-{
-  "name": "__",
-  "comment": "???",
-  "gender": false,
-  "birth": "2000-01-01",
-  "weight": 100.0,
-  "class": 100
-}
+{"name":"__","comment":"???","gender":false,"birth":"2000-01-01","weight":100,"class":100}
 POST /student1/_doc/
-{
-  "name": "王五",
-  "comment": "一位辣妹",
-  "gender": false,
-  "birth": "2002-02-02",
-  "weight": 87.5,
-  "class": 102
-}
+{"name":"王五","comment":"一位辣妹","gender":false,"birth":"2002-02-02","weight":87.5,"class":102}
 POST /student1/_doc/
-{
-  "name": "赵六",
-  "comment": "一位绅士",
-  "gender": true,
-  "birth": "1997-10-23",
-  "weight": 160.2,
-  "class": 102
-}
+{"name":"赵六","comment":"一位绅士","gender":true,"birth":"1997-10-23","weight":160.2,"class":102}
 # 查看所有文档
 GET /student1/_search
 # 修改文档
 POST /student1/_update/2
-{
-    "doc": {
-        "name": "李四四"
-    }
-}
+{"doc": {"name": "李四四"}}
 # 查看所有文档
 GET /student1/_search
 
@@ -116,149 +77,51 @@ DELETE /student1/_doc/3
 
 # 分词匹配
 GET /student1/_search
-{
-  "query": {
-    "match": {
-      "comment": "一位绅士"
-    }
-  }
-}
+{"query": {"match": {"comment": "一位绅士"}}}
 
 # 精确匹配（keyword）
 GET /student1/_search
-{
-  "query": {
-    "term": {
-      "name": "李四四"
-    }
-  }
-}
+{"query":{"term":{"name":"李四四"}}}
 
 # 范围匹配
 GET /student1/_search
-{
-  "query": {
-    "bool": {
-      "filter": [
-        {
-          "range": {
-            "birth": {
-              "gt": "1995-01-01",
-              "lt": "2000-01-01"
-            }
-          }
-        }
-      ]
-    }
-  }
-}
+{"query":{"bool":{"filter":[{"range":{"birth":{"gt":"1995-01-01","lt":"2000-01-01"}}}]}}}
 
 # ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 
 # 字段过滤
 GET /student1/_search
-{
-  "_source": ["name", "gender"]
-}
+{"_source": ["name", "gender"]}
 
 # 排序
 GET /student1/_search
-{
-  "sort": [
-    {
-      "birth": {
-        "order": "desc"
-      }
-    }
-  ]
-}
+{"sort":[{"birth":{"order":"desc"}}]}
+
+GET /student1/_search
+{"sort":[{"birth":{"order":"asc"}}]}
+
+# ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 
 # 分页查询
 GET /student1/_search
-{
-  "from": 0,
-  "size": 2
-}
+{"from": 0,"size": 2}
+
 GET /student1/_search
-{
-  "from": 2,
-  "size": 2
-}
+{"from": 2,"size": 2}
 
 # ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 
 ### 高亮匹配的内容
 GET /student1/_search
-{
-  "query": {
-    "match": {
-      "comment": "一位绅士"
-    }
-  },
-  "highlight": {
-    "pre_tags": ["<a>"],
-    "post_tags": ["</a>"],
-    "fields": {
-      "comment": {
-        "pre_tags": ["<b>"],
-        "post_tags": ["</b>"]
-      }
-    }
-  }
-}
+{"query":{"match":{"comment":"一位绅士"}},"highlight":{"pre_tags":["<a>"],"post_tags":["</a>"],"fields":{"comment":{"pre_tags":["<b>"],"post_tags":["</b>"]}}}}
+
 GET /student1/_search
-{
-  "query": {
-    "match": {
-      "comment": "一位绅士"
-    }
-  },
-  "highlight": {
-    "pre_tags": ["<a>"],
-    "post_tags": ["</a>"],
-    "fields": {
-      "comment": {}
-    }
-  }
-}
+{"query":{"match":{"comment":"一位绅士"}},"highlight":{"pre_tags":["<a>"],"post_tags":["</a>"],"fields":{"comment":{}}}}
+
 GET /student1/_search
-{
-  "query": {
-    "match": {
-      "comment": "一位绅士"
-    }
-  },
-  "highlight": {
-    "fields": {
-      "comment": {}
-    }
-  }
-}
+{"query":{"match":{"comment":"一位绅士"}},"highlight":{"fields":{"comment":{}}}}
 
 # ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 
 GET /student1/_search
-{
-  "aggs": {
-    "maxWeight": {
-      "max": {
-        "field": "weight"
-      }
-    },
-    "minWeight": {
-      "min": {
-        "field": "weight"
-      }
-    },
-    "avgWeight": {
-      "avg": {
-        "field": "weight"
-      }
-    },
-    "sumWeight": {
-      "sum": {
-        "field": "weight"
-      }
-    }
-  }
-}
+{"size":0,"aggs":{"maxWeight":{"max":{"field":"weight"}},"minWeight":{"min":{"field":"weight"}},"avgWeight":{"avg":{"field":"weight"}},"sumWeight":{"sum":{"field":"weight"}},"countGender":{"terms":{"field":"gender"},"aggs":{"maxGenderWeight":{"max":{"field":"weight"}},"minGenderWeight":{"min":{"field":"weight"}}}}}}
