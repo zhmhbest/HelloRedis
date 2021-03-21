@@ -166,13 +166,15 @@ WHERE NOT match(region , '^[0-9]+$');
 ### 聚合函数
 
 >[aggregate-functions](https://clickhouse.tech/docs/zh/sql-reference/aggregate-functions/reference/)
+>[aggregate-combinators](https://clickhouse.tech/docs/zh/sql-reference/aggregate-functions/combinators/)
 
 #### groupArray
 
 ```SQL
 SELECT
     `name`,
-    groupArray(`identity`) AS `identity`
+    groupArray(`identity`) AS `identity`,
+    arrayEnumerate(`identity`) AS `index`
 FROM (
     SELECT 'Ann' AS `name`, 'Student' AS `identity`
     UNION ALL

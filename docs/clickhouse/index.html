@@ -621,13 +621,15 @@ SAMPLE <span class="token keyword">BY</span> intHash32<span class="token punctua
 </pre><h3 class="mume-header" id="%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0">&#x805A;&#x5408;&#x51FD;&#x6570;</h3>
 
 <blockquote>
-<p><a href="https://clickhouse.tech/docs/zh/sql-reference/aggregate-functions/reference/">aggregate-functions</a></p>
+<p><a href="https://clickhouse.tech/docs/zh/sql-reference/aggregate-functions/reference/">aggregate-functions</a><br>
+<a href="https://clickhouse.tech/docs/zh/sql-reference/aggregate-functions/combinators/">aggregate-combinators</a></p>
 </blockquote>
 <h4 class="mume-header" id="grouparray">groupArray</h4>
 
 <pre data-role="codeBlock" data-info="SQL" class="language-sql"><span class="token keyword">SELECT</span>
     <span class="token punctuation">`</span>name<span class="token punctuation">`</span><span class="token punctuation">,</span>
-    groupArray<span class="token punctuation">(</span><span class="token punctuation">`</span><span class="token keyword">identity</span><span class="token punctuation">`</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> <span class="token punctuation">`</span><span class="token keyword">identity</span><span class="token punctuation">`</span>
+    groupArray<span class="token punctuation">(</span><span class="token punctuation">`</span><span class="token keyword">identity</span><span class="token punctuation">`</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> <span class="token punctuation">`</span><span class="token keyword">identity</span><span class="token punctuation">`</span><span class="token punctuation">,</span>
+    arrayEnumerate<span class="token punctuation">(</span><span class="token punctuation">`</span><span class="token keyword">identity</span><span class="token punctuation">`</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> <span class="token punctuation">`</span><span class="token keyword">index</span><span class="token punctuation">`</span>
 <span class="token keyword">FROM</span> <span class="token punctuation">(</span>
     <span class="token keyword">SELECT</span> <span class="token string">&apos;Ann&apos;</span> <span class="token keyword">AS</span> <span class="token punctuation">`</span>name<span class="token punctuation">`</span><span class="token punctuation">,</span> <span class="token string">&apos;Student&apos;</span> <span class="token keyword">AS</span> <span class="token punctuation">`</span><span class="token keyword">identity</span><span class="token punctuation">`</span>
     <span class="token keyword">UNION</span> <span class="token keyword">ALL</span>
