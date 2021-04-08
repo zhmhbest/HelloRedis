@@ -10,3 +10,10 @@
 - [Download Kafka from apache](https://archive.apache.org/dist/kafka/)
 - [Download Kafka from tsinghua](https://mirrors.tuna.tsinghua.edu.cn/apache/kafka/)
 - [Download Kafka from aliyun](https://mirrors.aliyun.com/apache/kafka/)
+
+## 启动
+
+```batch
+@START "Zookeeper" bin\windows\zookeeper-server-start.bat config\zookeeper.properties
+@START "Kafka" bin\windows\kafka-server-start.bat config\server.properties
+```
