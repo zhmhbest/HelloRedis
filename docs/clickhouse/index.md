@@ -8,3 +8,5 @@
 @import "install.md"
 
 @import "sql.md"
+
+@import "fix.md"

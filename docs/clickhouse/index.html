@@ -3,7 +3,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.2/dist/katex.min.css">
       
       
       
@@ -310,6 +310,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </li>
 </ul>
 </li>
+<li><a href="#%E6%95%85%E9%9A%9C%E4%BF%AE%E5%A4%8D">&#x6545;&#x969C;&#x4FEE;&#x590D;</a></li>
 </ul>
 </li>
 </ul>
@@ -683,6 +684,13 @@ ARRAY <span class="token keyword">JOIN</span> <span class="token punctuation">`<
     <span class="token keyword">GROUP</span> <span class="token keyword">BY</span> <span class="token punctuation">`</span>class<span class="token punctuation">`</span>
     <span class="token keyword">HAVING</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">&gt;</span> <span class="token number">2</span>
 <span class="token punctuation">)</span> ARRAY <span class="token keyword">JOIN</span> <span class="token punctuation">`</span>id<span class="token punctuation">`</span><span class="token punctuation">,</span> <span class="token punctuation">`</span>name<span class="token punctuation">`</span><span class="token punctuation">;</span>
+</pre><h2 class="mume-header" id="%E6%95%85%E9%9A%9C%E4%BF%AE%E5%A4%8D">&#x6545;&#x969C;&#x4FEE;&#x590D;</h2>
+
+<pre data-role="codeBlock" data-info="log" class="language-log"><code>... &lt;Debug&gt; Application: Shut down storages.
+... &lt;Debug&gt; Application: Destroyed global context.
+... &lt;Error&gt; Application: Coordination::Exception: No node, path: /...
+</code></pre><pre data-role="codeBlock" data-info="bash" class="language-bash"><span class="token function">mv</span> <span class="token string">&apos;/var/lib/clickhouse/metadata&apos;</span> <span class="token string">&apos;/var/lib/clickhouse/metadata_bk&apos;</span>
+<span class="token function">mv</span> <span class="token string">&apos;/var/lib/clickhouse/data&apos;</span> <span class="token string">&apos;/var/lib/clickhouse/data_bk&apos;</span>
 </pre>
       </div>
       
