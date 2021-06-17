@@ -287,6 +287,12 @@ pre[data-line] .line-highlight[data-end]:after {
 </ul>
 </li>
 <li><a href="#ik%E5%88%86%E8%AF%8D%E5%99%A8">IK&#x5206;&#x8BCD;&#x5668;</a></li>
+<li><a href="#logstash">Logstash</a>
+<ul>
+<li><a href="#hello">Hello</a></li>
+<li><a href="#%E9%85%8D%E7%BD%AE">&#x914D;&#x7F6E;</a></li>
+</ul>
+</li>
 <li><a href="#es-clients">ES Clients</a>
 <ul>
 <li><a href="#javascript">JavaScript</a></li>
@@ -317,8 +323,8 @@ pre[data-line] .line-highlight[data-end]:after {
 -Xmx256m
 </pre><p>&#x4FEE;&#x6539;Kibana&#x8BED;&#x8A00;</p>
 <p><code>vim kibana-${VERSION}/config/kibana.yml</code></p>
-<pre data-role="codeBlock" data-info="conf" class="language-conf"><code>18n.locale: &quot;zh-CN&quot;
-</code></pre><h3 class="mume-header" id="es-head">es-head</h3>
+<pre data-role="codeBlock" data-info="yaml" class="language-yaml"><span class="token key atrule">18n.locale</span><span class="token punctuation">:</span> <span class="token string">&quot;zh-CN&quot;</span>
+</pre><h3 class="mume-header" id="es-head">es-head</h3>
 
 <pre data-role="codeBlock" data-info="bash" class="language-bash"><span class="token comment"># &#x4E0B;&#x8F7D;</span>
 <span class="token function">wget</span> <span class="token string">&apos;https://github.com/mobz/elasticsearch-head/archive/master.zip&apos;</span> -O <span class="token string">&apos;es-head.zip&apos;</span>
@@ -862,6 +868,28 @@ GET /_analyze
   <span class="token string">&quot;analyzer&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;standard&quot;</span>,
   <span class="token string">&quot;text&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;&#x5317;&#x4EAC;&#x6545;&#x5BAB;&#x535A;&#x7269;&#x9662;&#x5EFA;&#x7ACB;&#x4E8E;1925&#x5E74;10&#x6708;10&#x65E5;&#xFF0C;&#x4F4D;&#x4E8E;&#x5317;&#x4EAC;&#x6545;&#x5BAB;&#x7D2B;&#x7981;&#x57CE;&#x5185;&#x3002;&quot;</span>
 <span class="token punctuation">}</span>
+</pre><h2 class="mume-header" id="logstash">Logstash</h2>
+
+<h3 class="mume-header" id="hello">Hello</h3>
+
+<pre data-role="codeBlock" data-info="bash" class="language-bash"><span class="token builtin class-name">cd</span> logstash-<span class="token variable">${VERSION}</span>/bin
+<span class="token comment"># logstash -f &quot;${&#x914D;&#x7F6E;&#x6587;&#x4EF6;}&quot;</span>
+<span class="token comment"># logstash -e &quot;${&#x914D;&#x7F6E;&#x5185;&#x5BB9;}&quot;</span>
+logstash -e <span class="token string">&quot;input{ stdin{} } filter{} output{ stdout{} }&quot;</span>
+</pre><pre data-role="codeBlock" data-info="txt" class="language-txt">...
+[????-??-??T??:??:??,???][INFO][logstash.agent] Pipelines running {:count=&gt;1, :pipelines=&gt;[&quot;main&quot;]}
+Hello Logstash
+{
+    &quot;@timestamp&quot; =&gt; ????-??-??T??:??:??.???Z,
+      &quot;@version&quot; =&gt; &quot;1&quot;,
+       &quot;message&quot; =&gt; &quot;Hello Logstash\r&quot;,
+          &quot;host&quot; =&gt; &quot;MyHostName&quot;
+}
+</pre><h3 class="mume-header" id="%E9%85%8D%E7%BD%AE">&#x914D;&#x7F6E;</h3>
+
+<p><code>vim logstash-${VERSION}/config/logstash.yml</code></p>
+<pre data-role="codeBlock" data-info="yaml" class="language-yaml"><span class="token comment"># &#x5F53;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4FEE;&#x6539;&#x540E;&#x81EA;&#x52A8;&#x91CD;&#x8F7D;</span>
+<span class="token key atrule">config.reload.automatic</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
 </pre><h2 class="mume-header" id="es-clients">ES Clients</h2>
 
 <ul>

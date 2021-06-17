@@ -29,7 +29,7 @@ ElasticSearch 会索引所有字段，经过处理后写入一个反向索引（
 
 `vim kibana-${VERSION}/config/kibana.yml`
 
-```conf
+```yaml
 18n.locale: "zh-CN"
 ```
 
@@ -107,6 +107,38 @@ kibana-${VERSION}/bin/kibana
 ## IK分词器
 
 @import "docs/analysis_ik.md"
+
+## Logstash
+
+### Hello
+
+```bash
+cd logstash-${VERSION}/bin
+# logstash -f "${配置文件}"
+# logstash -e "${配置内容}"
+logstash -e "input{ stdin{} } filter{} output{ stdout{} }"
+```
+
+```txt
+...
+[????-??-??T??:??:??,???][INFO][logstash.agent] Pipelines running {:count=>1, :pipelines=>["main"]}
+Hello Logstash
+{
+    "@timestamp" => ????-??-??T??:??:??.???Z,
+      "@version" => "1",
+       "message" => "Hello Logstash\r",
+          "host" => "MyHostName"
+}
+```
+
+### 配置
+
+`vim logstash-${VERSION}/config/logstash.yml`
+
+```yaml
+# 当配置文件修改后自动重载
+config.reload.automatic: true
+```
 
 ## ES Clients
 
