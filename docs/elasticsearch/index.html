@@ -289,8 +289,9 @@ pre[data-line] .line-highlight[data-end]:after {
 <li><a href="#ik%E5%88%86%E8%AF%8D%E5%99%A8">IK&#x5206;&#x8BCD;&#x5668;</a></li>
 <li><a href="#logstash">Logstash</a>
 <ul>
-<li><a href="#hello">Hello</a></li>
 <li><a href="#%E9%85%8D%E7%BD%AE">&#x914D;&#x7F6E;</a></li>
+<li><a href="#hello">Hello</a></li>
+<li><a href="#filter">Filter</a></li>
 </ul>
 </li>
 <li><a href="#es-clients">ES Clients</a>
@@ -870,7 +871,12 @@ GET /_analyze
 <span class="token punctuation">}</span>
 </pre><h2 class="mume-header" id="logstash">Logstash</h2>
 
-<h3 class="mume-header" id="hello">Hello</h3>
+<h3 class="mume-header" id="%E9%85%8D%E7%BD%AE">&#x914D;&#x7F6E;</h3>
+
+<p><code>vim logstash-${VERSION}/config/logstash.yml</code></p>
+<pre data-role="codeBlock" data-info="yaml" class="language-yaml"><span class="token comment"># &#x5F53;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4FEE;&#x6539;&#x540E;&#x81EA;&#x52A8;&#x91CD;&#x8F7D;</span>
+<span class="token key atrule">config.reload.automatic</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+</pre><h3 class="mume-header" id="hello">Hello</h3>
 
 <pre data-role="codeBlock" data-info="bash" class="language-bash"><span class="token builtin class-name">cd</span> logstash-<span class="token variable">${VERSION}</span>/bin
 <span class="token comment"># logstash -f &quot;${&#x914D;&#x7F6E;&#x6587;&#x4EF6;}&quot;</span>
@@ -885,11 +891,27 @@ Hello Logstash
        &quot;message&quot; =&gt; &quot;Hello Logstash\r&quot;,
           &quot;host&quot; =&gt; &quot;MyHostName&quot;
 }
-</pre><h3 class="mume-header" id="%E9%85%8D%E7%BD%AE">&#x914D;&#x7F6E;</h3>
+</pre><h3 class="mume-header" id="filter">Filter</h3>
 
-<p><code>vim logstash-${VERSION}/config/logstash.yml</code></p>
-<pre data-role="codeBlock" data-info="yaml" class="language-yaml"><span class="token comment"># &#x5F53;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4FEE;&#x6539;&#x540E;&#x81EA;&#x52A8;&#x91CD;&#x8F7D;</span>
-<span class="token key atrule">config.reload.automatic</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+<p><code>vim test.conf</code></p>
+<pre data-role="codeBlock" data-info="conf" class="language-conf"><code>input {
+    stdin{}
+}
+
+filter {
+    grok {
+        match =&gt; { &quot;message&quot; =&gt; &quot;%{WORD:a2}\|%{NUMBER:a1}(\r\n|\n|\r)&quot;}
+    }
+}
+
+output {
+    stdout{}
+}
+</code></pre><pre data-role="codeBlock" data-info="bash" class="language-bash">logstash -f test.conf
+
+qwe<span class="token operator">|</span><span class="token number">789</span>
+asd<span class="token operator">|</span><span class="token number">456</span>
+zxc<span class="token operator">|</span><span class="token number">123</span>
 </pre><h2 class="mume-header" id="es-clients">ES Clients</h2>
 
 <ul>

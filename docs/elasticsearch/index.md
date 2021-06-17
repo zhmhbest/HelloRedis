@@ -110,6 +110,15 @@ kibana-${VERSION}/bin/kibana
 
 ## Logstash
 
+### 配置
+
+`vim logstash-${VERSION}/config/logstash.yml`
+
+```yaml
+# 当配置文件修改后自动重载
+config.reload.automatic: true
+```
+
 ### Hello
 
 ```bash
@@ -131,13 +140,32 @@ Hello Logstash
 }
 ```
 
-### 配置
+### Filter
 
-`vim logstash-${VERSION}/config/logstash.yml`
+`vim test.conf`
 
-```yaml
-# 当配置文件修改后自动重载
-config.reload.automatic: true
+```conf
+input {
+    stdin{}
+}
+
+filter {
+    grok {
+        match => { "message" => "%{WORD:a2}\|%{NUMBER:a1}(\r\n|\n|\r)"}
+    }
+}
+
+output {
+    stdout{}
+}
+```
+
+```bash
+logstash -f test.conf
+
+qwe|789
+asd|456
+zxc|123
 ```
 
 ## ES Clients
