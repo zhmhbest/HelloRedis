@@ -15,7 +15,7 @@ ElasticSearch 会索引所有字段，经过处理后写入一个反向索引（
 
 学习环境下减少ElasticSearch内存占用。
 
-`vim ./config/jvm.options`
+`vim elasticsearch-${VERSION}/config/jvm.options`
 
 ```bash
 # Xms represents the initial size of total heap space
@@ -27,7 +27,7 @@ ElasticSearch 会索引所有字段，经过处理后写入一个反向索引（
 
 修改Kibana语言
 
-`vim ./config/kibana.yml`
+`vim kibana-${VERSION}/config/kibana.yml`
 
 ```conf
 18n.locale: "zh-CN"
@@ -43,6 +43,8 @@ mv './elasticsearch-head-master/crx/es-head.crx' './'
 rm -rf './elasticsearch-head-master'
 ```
 
+- <chrome://extensions/>
+
 ### 启动
 
 ```bash
@@ -56,7 +58,8 @@ kibana-${VERSION}/bin/kibana
 # 默认HTTP协议端口5601
 ```
 
-- <http://localhost:5601>
+- ElasticSearch: <http://localhost:9200>
+- Kibana: <http://localhost:5601>
 - Kibana 5+ Console: <http://localhost:5601/app/kibana#/dev_tools/console>
 - Kibana 7+ Console: <http://localhost:5601/app/dev_tools#/console>
 

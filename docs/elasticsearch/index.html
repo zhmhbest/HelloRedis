@@ -309,14 +309,14 @@ pre[data-line] .line-highlight[data-end]:after {
 <h2 class="mume-header" id="%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83">&#x8FD0;&#x884C;&#x73AF;&#x5883;</h2>
 
 <p>&#x5B66;&#x4E60;&#x73AF;&#x5883;&#x4E0B;&#x51CF;&#x5C11;ElasticSearch&#x5185;&#x5B58;&#x5360;&#x7528;&#x3002;</p>
-<p><code>vim ./config/jvm.options</code></p>
+<p><code>vim elasticsearch-${VERSION}/config/jvm.options</code></p>
 <pre data-role="codeBlock" data-info="bash" class="language-bash"><span class="token comment"># Xms represents the initial size of total heap space</span>
 <span class="token comment"># Xmx represents the maximum size of total heap space</span>
 
 -Xms256m
 -Xmx256m
 </pre><p>&#x4FEE;&#x6539;Kibana&#x8BED;&#x8A00;</p>
-<p><code>vim ./config/kibana.yml</code></p>
+<p><code>vim kibana-${VERSION}/config/kibana.yml</code></p>
 <pre data-role="codeBlock" data-info="conf" class="language-conf"><code>18n.locale: &quot;zh-CN&quot;
 </code></pre><h3 class="mume-header" id="es-head">es-head</h3>
 
@@ -325,7 +325,10 @@ pre[data-line] .line-highlight[data-end]:after {
 <span class="token function">unzip</span> <span class="token string">&apos;./es-head.zip&apos;</span>
 <span class="token function">mv</span> <span class="token string">&apos;./elasticsearch-head-master/crx/es-head.crx&apos;</span> <span class="token string">&apos;./&apos;</span>
 <span class="token function">rm</span> -rf <span class="token string">&apos;./elasticsearch-head-master&apos;</span>
-</pre><h3 class="mume-header" id="%E5%90%AF%E5%8A%A8">&#x542F;&#x52A8;</h3>
+</pre><ul>
+<li><a href="chrome://extensions/">chrome://extensions/</a></li>
+</ul>
+<h3 class="mume-header" id="%E5%90%AF%E5%8A%A8">&#x542F;&#x52A8;</h3>
 
 <pre data-role="codeBlock" data-info="bash" class="language-bash"><span class="token comment"># &#x542F;&#x52A8;ES</span>
 elasticsearch-<span class="token variable">${VERSION}</span>/bin/elasticsearch
@@ -336,7 +339,8 @@ elasticsearch-<span class="token variable">${VERSION}</span>/bin/elasticsearch
 kibana-<span class="token variable">${VERSION}</span>/bin/kibana
 <span class="token comment"># &#x9ED8;&#x8BA4;HTTP&#x534F;&#x8BAE;&#x7AEF;&#x53E3;5601</span>
 </pre><ul>
-<li><a href="http://localhost:5601">http://localhost:5601</a></li>
+<li>ElasticSearch: <a href="http://localhost:9200">http://localhost:9200</a></li>
+<li>Kibana: <a href="http://localhost:5601">http://localhost:5601</a></li>
 <li>Kibana 5+ Console: <a href="http://localhost:5601/app/kibana#/dev_tools/console">http://localhost:5601/app/kibana#/dev_tools/console</a></li>
 <li>Kibana 7+ Console: <a href="http://localhost:5601/app/dev_tools#/console">http://localhost:5601/app/dev_tools#/console</a></li>
 </ul>
