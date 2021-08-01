@@ -26,7 +26,7 @@ redis-cli.exe -h localhost -p 6379
 ```bash
 yum -y install gcc-c++ make
 redis_version='5.0.8'
-wget "http://download.redis.io/releases/redis-${redis_version}.tar.gz" 
+wget "http://download.redis.io/releases/redis-${redis_version}.tar.gz"
 tar -xvf redis-${redis_version}.tar.gz
 pushd redis-${redis_version}
 make distclean
@@ -275,3 +275,70 @@ async function connected() {
     process.exit(0);
 }
 ```
+
+## 常见问题
+
+### Redis为什么快
+
+1. 完全基于内存
+2. 单线程
+   - 避免上下文切换
+   - 使用乐观锁
+3. 非阻塞I/O多路复用机制：多个网络连接复用同一个线程。
+4. 数据结构简单
+   - 简单动态字符串：记录了自身使用和未使用的长度
+   - 双端链表：无环链表
+   - 字典：哈希表
+   - 跳跃表
+   - 整数集合
+   - 压缩列表
+5. 底层模型：VM机制（冷数据Value保存到磁盘上）
+6. 过期策略
+   - 定期删除
+   - 惰性删除
+7. 内存淘汰机制
+   - volatile-lru：内存不足时，删除设置了过期时间的键空间中最近最少使用的key
+   - allkeys-lru：内存不足时，在键空间中删除最少使用的key
+   - volatile-random：内存不足时，随机删除在设置了过期时间的键空间中的key
+   - allkeys-random：内存不足时，随即删除在键空间中的key
+   - volatile-ttl：内存不足时，在设置了过期时间的键空间中，优先移除更早过期时间的key
+   - noeviction：永不过期
+
+### 缓存穿透/缓存击穿/缓存雪崩
+
+#### 缓存穿透
+
+**缓存和数据库中都没有的数据**
+
+1. 把无效的Key存进Redis。
+2. 使用布隆过滤器。
+
+#### 缓存击穿
+
+**缓存中没有但数据库中有的数据**
+
+1. 热点数据永不过期
+2. 互斥锁
+
+#### 缓存雪崩
+
+**缓存中数据大量过期，造成数据库宕机**
+
+1. 失效时间加随机值。
+2. 熔断机制，当流量到达一定的阈值时将不再提供正常访问。
+3. 提高数据库容灾能力。
+4. 提高Redis的容灾性。
+
+### Redis持久化
+
+#### AOF
+
+将Redis执行的每次写命令记录到单独的日志文件中。
+
+- always: 把每个写命令都立即同步到aof
+- everysec: 每秒同步一次
+- no: 交给OS来处理
+
+#### RDB
+
+将当前进程中的数据生成快照保存到硬盘（阻塞）。
